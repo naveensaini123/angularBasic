@@ -37,6 +37,10 @@ AppModule = __decorate([
                     path: 'dashboard',
                     component: dashboard_component_1.DashboardComponent
                 },
+                {
+                    path: 'detail/:id',
+                    component: hero_detail_component_1.HeroDetailComponent
+                }
             ])
         ],
         declarations: [app_component_1.AppComponent, hero_detail_component_1.HeroDetailComponent, heroes_component_1.HeroesComponent, dashboard_component_1.DashboardComponent],

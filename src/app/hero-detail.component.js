@@ -10,9 +10,24 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 var core_1 = require("@angular/core");
 var hero_1 = require("./hero");
+var router_1 = require("@angular/router");
+var hero_service_1 = require("./hero.service");
+var common_1 = require("@angular/common");
+require("rxjs/add/operator/switchMap");
 var HeroDetailComponent = (function () {
-    function HeroDetailComponent() {
+    function HeroDetailComponent(route, heroService, location) {
+        this.route = route;
+        this.heroService = heroService;
+        this.location = location;
     }
+    HeroDetailComponent.prototype.ngOnInit = function () {
+        var _this = this;
+        this.route.paramMap.switchMap(function (params) { return _this.heroService.getHero(+params.get('id')); })
+            .subscribe(function (hero) { return _this.hero = hero; });
+    };
+    HeroDetailComponent.prototype.goBack = function () {
+        this.location.back();
+    };
     return HeroDetailComponent;
 }());
 __decorate([
@@ -22,8 +37,11 @@ __decorate([
 HeroDetailComponent = __decorate([
     core_1.Component({
         selector: 'hero-detail',
-        template: " <div *ngIf=\"hero\">\n    <h2>{{hero.name}} details!</h2>\n    <div>\n      <label>id:</label>\n      {{hero.id}}\n    </div>\n    <div>\n      <label>name:</label>\n      <input [(ngModel)]=\"hero.name\" placeholder=\"name\" />\n    </div>\n  </div>"
-    })
+        templateUrl: "./hero-detail.component.html"
+    }),
+    __metadata("design:paramtypes", [router_1.ActivatedRoute,
+        hero_service_1.HeroService,
+        common_1.Location])
 ], HeroDetailComponent);
 exports.HeroDetailComponent = HeroDetailComponent;
 //# sourceMappingURL=hero-detail.component.js.map
