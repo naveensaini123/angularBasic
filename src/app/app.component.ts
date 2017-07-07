@@ -7,11 +7,12 @@ import { HeroService } from './hero.service';
   <nav>
     <a routerLink="/dashboard">Dashboard</a>
     <a routerLink = "/heroes">Heroes</a>
-    <router-outlet></router-outlet>  
+    <router-outlet></router-outlet>
   </nav>
-  
-  
+
+
   `,
+  styleUrls: ['./app.component.css'],
   providers: [ HeroService ]
 })
 
