@@ -30,6 +30,24 @@ var HeroesComponent = (function () {
     HeroesComponent.prototype.gotoDetail = function () {
         this.router.navigate(['/detail', this.selectedHero.id]);
     };
+    HeroesComponent.prototype.add = function (name) {
+        var _this = this;
+        this.heroSerivce.create(name)
+            .then(function (hero) {
+            _this.heroes.push(hero);
+        });
+    };
+    HeroesComponent.prototype.delete = function (hero) {
+        var _this = this;
+        this.heroSerivce
+            .delete(hero.id)
+            .then(function () {
+            _this.heroes = _this.heroes.filter(function (h) { return h !== hero; });
+            if (_this.selectedHero === hero) {
+                _this.selectedHero = null;
+            }
+        });
+    };
     return HeroesComponent;
 }());
 HeroesComponent = __decorate([
