@@ -1,5 +1,5 @@
 
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {HeroSearchService} from './hero-search.service';
 import {Observable} from 'rxjs/Observable';
 import {Hero} from './hero';
@@ -21,7 +21,8 @@ import 'rxjs/add/operator/distinctUntilChanged';
   providers: [HeroSearchService]
 })
 
-export class HeroSearchComponent implements OnInit {
+export class HeroSearchComponent implements OnInit, OnDestroy {
+
   heroes: Observable<Hero[]>;
   private searchTerms = new Subject<string>();
 
@@ -30,7 +31,14 @@ export class HeroSearchComponent implements OnInit {
     private router: Router
   ) {}
 
+// Push a search term into the observable stream.
+  search(term: string): void {
+    console.log('term adding ' + term);
+    this.searchTerms.next(term);
+  }
+
   ngOnInit(): void {
+    console.log('I am here In Intialize part')
     this.heroes = this.searchTerms
       .debounceTime(300)
       .distinctUntilChanged()
@@ -46,6 +54,10 @@ export class HeroSearchComponent implements OnInit {
   gotoDetail(hero: Hero): void {
     let link = ['detail', hero.id];
     this.router.navigate(link);
+  }
+
+  ngOnDestroy(): void {
+    console.log('Component delete');
   }
 
 }

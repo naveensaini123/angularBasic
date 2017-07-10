@@ -25,8 +25,14 @@ var HeroSearchComponent = (function () {
         this.router = router;
         this.searchTerms = new Subject_1.Subject();
     }
+    // Push a search term into the observable stream.
+    HeroSearchComponent.prototype.search = function (term) {
+        console.log('term adding ' + term);
+        this.searchTerms.next(term);
+    };
     HeroSearchComponent.prototype.ngOnInit = function () {
         var _this = this;
+        console.log('I am here In Intialize part');
         this.heroes = this.searchTerms
             .debounceTime(300)
             .distinctUntilChanged()
@@ -41,6 +47,9 @@ var HeroSearchComponent = (function () {
     HeroSearchComponent.prototype.gotoDetail = function (hero) {
         var link = ['detail', hero.id];
         this.router.navigate(link);
+    };
+    HeroSearchComponent.prototype.ngOnDestroy = function () {
+        console.log('Component delete');
     };
     return HeroSearchComponent;
 }());
